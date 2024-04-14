@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/rafflesandparticipants.css"
 
 const RafflesAndParticipants = ({ rafflesWithParticipants }) => {
   const groupedParticipants = {};
@@ -10,7 +11,7 @@ const RafflesAndParticipants = ({ rafflesWithParticipants }) => {
   });
 
   return (
-    <div>
+    <div className="rAndp-container">
       <h2>Raffles and Participants:</h2>
       {Object.entries(groupedParticipants).map(([raffleName, participants], index) => (
         <div key={index}>
