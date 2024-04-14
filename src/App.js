@@ -51,9 +51,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        My Raffles App
+        Raffles App
       </header>
-      <div>
+      <div className='all-raffles'>
         <h2>All Raffles:</h2>
         <ul>
           {raffles.map(raffle => (

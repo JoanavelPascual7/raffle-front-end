@@ -1,14 +1,34 @@
 .App {
-  text-align: center;
+margin: 150px;
 }
 
 * { 
   margin: 0;
-  padding: 0;
+  padding: 5px;
   box-sizing: border-box;
 }
 
 
 body{
 background-color: white;
+
 }
+
+.App-header{
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  padding-bottom: 100px;
+}
+
+.all-raffles{
+  border: 2px solid lightgray ;
+  text-decoration: none;
+}
+
+.all-raffles ul {
+  list-style-type: none;
+  padding: 0; 
+  margin: 0; 
+}
+
