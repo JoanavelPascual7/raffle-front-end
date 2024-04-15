@@ -1,30 +1,28 @@
 import React from "react";
-import "../css/rafflesandparticipants.css"
+import "../css/rafflesandparticipants.css";
 
-const RafflesAndParticipants = ({ rafflesWithParticipants }) => {
-  const groupedParticipants = {};
-  rafflesWithParticipants.forEach(participant => {
-    if (!groupedParticipants[participant.name]) {
-      groupedParticipants[participant.name] = [];
-    }
-    groupedParticipants[participant.name].push(participant);
-  });
+const RafflesAndParticipants = ({ rafflesWithParticipants, selectedRaffleName }) => {
+  // Filter the rafflesWithParticipants data based on the selected raffle name
+  const raffle = rafflesWithParticipants.find(raffle => raffle.name === selectedRaffleName);
+
+  if (!raffle) {
+    return <p>No participants found for the selected raffle.</p>;
+  }
 
   return (
     <div className="rAndp-container">
-      <h2>Raffles and Participants:</h2>
-      {Object.entries(groupedParticipants).map(([raffleName, participants], index) => (
-        <div key={index}>
-          <h3>Raffle: {raffleName}</h3>
-          <ul>
-            {participants.map((participant, index) => (
-              <li key={index}>
-                Name: {participant.firstname} {participant.lastname}, Email: {participant.email}, Phone: {participant.phone}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <h2>Raffle Details</h2>
+      <h3>{raffle.name}</h3>
+      <h3>Participants:</h3>
+      <ul>
+        {raffle.participants.map((participant, index) => (
+          <li key={index}>
+            Name: {participant.firstname} {participant.lastname}, 
+            Email: {participant.email}, 
+            Phone: {participant.phone}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

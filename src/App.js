@@ -4,13 +4,16 @@ import React, { useEffect, useState } from 'react';
 
 import Participants from '../src/components/Participants';
 import RafflesAndParticipants from '../src/components/RafflesAndParticipants';
-import IndividualRaffle from '../src/components/IndividualRaffle';
+import AddRaffle from './components/AddRaffle';
+import JoinRaffle from './components/JoinRaffle';
 
 function App() {
   const [raffles, setRaffles] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [rafflesWithParticipants, setRafflesWithParticipants] = useState([]);
-  const [selectedRaffleId, setSelectedRaffleId] = useState(null);
+  const [selectedRaffleName, setSelectedRaffleName] = useState(null);
+  const [showAddRaffle, setShowAddRaffle] = useState(false);
+  const [showJoinRaffle, setShowJoinRaffle] = useState(false);
 
   useEffect(() => {
     const fetchRaffles = async () => {
@@ -34,10 +37,7 @@ function App() {
     const fetchRafflesWithParticipants = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/raffles-with-participants`);
-        console.log('Response data:', response.data.data);
-        const rafflesWithParticipantsData = response.data.data;
-        setRafflesWithParticipants(rafflesWithParticipantsData);
-        console.log('Raffles with participants:', rafflesWithParticipantsData);
+        setRafflesWithParticipants(response.data.data);
       } catch (error) {
         console.error('Error fetching raffles with participants:', error);
       }
@@ -48,8 +48,16 @@ function App() {
     fetchRafflesWithParticipants();
   }, []);
 
-  const handleRaffleClick = (raffleId) => {
-    setSelectedRaffleId(raffleId);
+  const handleRaffleClick = (raffleName) => {
+    setSelectedRaffleName(raffleName);
+  };
+
+  const toggleAddRaffle = () => {
+    setShowAddRaffle(!showAddRaffle);
+  };
+
+  const toggleJoinRaffle = () => {
+    setShowJoinRaffle(!showJoinRaffle);
   };
 
   return (
@@ -58,29 +66,29 @@ function App() {
         Raffles App
       </header>
       <div className='all-raffles'>
-        <h2>All Raffles:</h2>
+        <h2>Raffles:</h2>
         <ul>
           {raffles.map(raffle => (
             <li key={raffle.id}>
               {raffle.name}
-              {/* Add a button to view individual raffle */}
-              <button onClick={() => handleRaffleClick(raffle.id)}>View</button>
+              <button onClick={() => handleRaffleClick(raffle.name)}>View</button>
+              <button onClick={toggleJoinRaffle}>Join Raffle</button> 
             </li>
           ))}
         </ul>
+        <button onClick={toggleAddRaffle}>Add Event</button>
       </div>
       <Participants participants={participants} />
-      {selectedRaffleId && (
-        <IndividualRaffle
-          raffles={raffles}
-          raffleId={selectedRaffleId}
-        />
+      {selectedRaffleName && (
+        <div>
+          <RafflesAndParticipants
+            rafflesWithParticipants={rafflesWithParticipants}
+            selectedRaffleName={selectedRaffleName}
+          />
+        </div>
       )}
-      {rafflesWithParticipants.length > 0 && (
-        <RafflesAndParticipants
-          rafflesWithParticipants={rafflesWithParticipants}
-        />
-      )}
+      {showAddRaffle && <AddRaffle />}
+      {showJoinRaffle && <JoinRaffle />} 
     </div>
   );
 }
