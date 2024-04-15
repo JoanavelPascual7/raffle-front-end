@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+
+## How My App Works 
+https://docs.google.com/spreadsheets/d/12H0klCrZPJfaC6G2khp3Bx3NC6yJO9oxvTpTmI5TxDY/edit#gid=0
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
